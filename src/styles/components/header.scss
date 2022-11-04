@@ -2,25 +2,19 @@ header {
   position: fixed;
   width: 100%;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: $light;
-  padding: 1rem $padding-layout;
+  background-color: $white;
+  padding: 1rem;
+  border-bottom: 1px solid $color-border;
 
   z-index: 100;
-  .nav ul {
-    position: relative;
+  .container {
     display: flex;
-    gap: 1rem;
-  }
-  .bar .icon {
-    position: relative;
-
-    svg {
-      width: 1.2rem;
-      height: 1.2rem;
+    align-items: center;
+    justify-content: space-between;
+    .logo {
+      position: relative;
+      display: flex;
+      align-items: center;
     }
   }
 }

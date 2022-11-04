@@ -8,7 +8,6 @@ import Router from './router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Header from '../components/header';
-import Footer from '../components/footer';
 
 const queryClient = new QueryClient();
 
@@ -34,7 +33,7 @@ export default function Layout() {
       <BrowserRouter>
         <Header />
         <Router />
-        <Footer />
+
         <RestoreScroll />
       </BrowserRouter>
     </QueryClientProvider>

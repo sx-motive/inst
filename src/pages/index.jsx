@@ -1,31 +1,53 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import Post from '../components/post';
+
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
+};
+
+const app = initializeApp(firebaseConfig);
+let defaultFirestore = getFirestore(app);
 
 export default function Index() {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    async function getPosts() {
+      const postsCol = collection(defaultFirestore, 'posts');
+      const postSnapshot = await getDocs(postsCol);
+      const postList = postSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        post: doc.data(),
+      }));
+      setPosts(postList);
+      console.log(postList);
+    }
+    getPosts();
+  }, []);
   return (
     <section className='content'>
-      <h1>Index Page</h1>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
-      </p>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
-      </p>
+      <div className='container'>
+        <div className='timeline'>
+          {posts.map(({ post, id }) => {
+            return (
+              <Post
+                key={id}
+                username={post.username}
+                userPic={post.userPic}
+                content={post.content}
+                caption={post.caption}
+              />
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }

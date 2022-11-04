@@ -3,13 +3,14 @@
 }
 
 html {
-  font-size: 1.2vw;
+  font-size: 12px;
 }
 
 body {
   font-family: $default-ff;
   font-weight: 400;
   margin: 0;
+  font-size: 1rem;
 }
 
 h1,
@@ -39,4 +40,11 @@ a {
 section {
   position: relative;
   width: 100%;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }

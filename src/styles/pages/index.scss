@@ -1,22 +1,8 @@
 section.content {
   position: relative;
-  padding: $padding-layout;
   padding-top: 6rem;
-  ul {
+  .timeline {
     position: relative;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 0.5rem;
-    li {
-      border: 1px solid $color-border;
-      padding: 1rem;
-      cursor: pointer;
-      &:hover {
-        background-color: $light;
-      }
-    }
+    width: 65%;
   }
 }
