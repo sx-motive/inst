@@ -1,0 +1,57 @@
+.sidebar {
+  position: relative;
+  width: 35%;
+
+  height: max-content;
+
+  input {
+    width: 100%;
+  }
+  button {
+    width: 100%;
+  }
+}
+
+.sidebar_item {
+  position: relative;
+  width: 100%;
+  background-color: $white;
+  border-radius: 10px;
+  border: 1px solid $color-border;
+  padding: 0.8rem 1rem 1.5rem 1rem;
+  margin-bottom: 1rem;
+  .sign_title {
+    display: block;
+    text-align: center;
+    margin-bottom: 0.8rem;
+  }
+  .sign_or {
+    display: block;
+    text-align: center;
+    margin: 0.8rem 0 0 0;
+    font-size: 0.7rem;
+    color: $color-middle;
+    .sign_or_link {
+      color: $black;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+}
+
+.sidebar_user_pic {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  img {
+    position: relative;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}

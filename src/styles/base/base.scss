@@ -3,14 +3,17 @@
 }
 
 html {
-  font-size: 12px;
+  font-size: 16px;
 }
 
 body {
   font-family: $default-ff;
   font-weight: 400;
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  background-color: $light;
+  overflow-y: scroll;
+  letter-spacing: -0.02rem;
 }
 
 h1,
@@ -45,6 +48,44 @@ section {
 .container {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 45rem;
   margin: 0 auto;
+}
+
+input {
+  font-size: 0.9rem;
+  color: $black;
+  border: none;
+  outline: $color-border solid 0.5px;
+  padding: 0.4rem 0.7rem 0.5rem 0.7rem;
+  border-radius: 5px;
+  font-family: $default-ff;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  font-weight: 400;
+  &:focus-visible {
+    outline: black solid 0.5px;
+  }
+  &::placeholder {
+    color: $color-middle;
+  }
+}
+
+button {
+  position: relative;
+  display: inline-block;
+  background-color: $color-border;
+  color: $black;
+  border: none;
+  font-size: 0.9rem;
+  font-family: $default-ff;
+  line-height: 0;
+  padding: 1.1rem 2rem 1.2rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $black;
+    color: $white;
+  }
 }

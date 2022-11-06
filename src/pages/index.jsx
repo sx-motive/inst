@@ -1,33 +1,26 @@
 import { useState, useEffect } from 'react';
+
+import { db } from '../firebase';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+
 import Post from '../components/post';
-
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_apiKey,
-  authDomain: import.meta.env.VITE_authDomain,
-  projectId: import.meta.env.VITE_projectId,
-  storageBucket: import.meta.env.VITE_storageBucket,
-  messagingSenderId: import.meta.env.VITE_messagingSenderId,
-  appId: import.meta.env.VITE_appId,
-};
-
-const app = initializeApp(firebaseConfig);
-let defaultFirestore = getFirestore(app);
+import Sidebar from '../components/sidebar';
 
 export default function Index() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     async function getPosts() {
-      const postsCol = collection(defaultFirestore, 'posts');
-      const postSnapshot = await getDocs(postsCol);
+      const postsRef = collection(db, 'posts');
+      const q = query(postsRef, orderBy('timestamp', 'desc'));
+      const postSnapshot = await getDocs(q);
+
       const postList = postSnapshot.docs.map((doc) => ({
         id: doc.id,
         post: doc.data(),
       }));
+
       setPosts(postList);
-      console.log(postList);
+      console.log(posts);
     }
     getPosts();
   }, []);
@@ -47,6 +40,7 @@ export default function Index() {
             );
           })}
         </div>
+        <Sidebar />
       </div>
     </section>
   );

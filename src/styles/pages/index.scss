@@ -1,8 +1,13 @@
 section.content {
   position: relative;
   padding-top: 6rem;
+  .container {
+    display: flex;
+    gap: 4%;
+  }
+
   .timeline {
     position: relative;
-    width: 65%;
+    width: 61%;
   }
 }

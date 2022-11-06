@@ -16,7 +16,7 @@ export default function Post({ username, userPic, content, caption }) {
       </div>
       <div className='post_footer'>
         <span className='post_description'>
-          <span className='post_footer_user'>{username}</span>
+          <span className='post_footer_user'>{username}: </span>
           {caption}
         </span>
       </div>
