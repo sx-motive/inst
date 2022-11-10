@@ -3,8 +3,11 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 import { LikedIcon, LikeIcon } from './icons';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../reacoilStore';
 
 export default function Post({ user, content, caption, postID, likes }) {
+  const userCur = useRecoilValue(userState);
   const [userData, setUserData] = useState({});
   const [isLike, setLike] = useState(false);
 
@@ -14,7 +17,9 @@ export default function Post({ user, content, caption, postID, likes }) {
       const post = await getDoc(postRef);
       const likesArr = post.data().likes;
 
-      likesArr.includes(auth.currentUser.uid) ? setLike(true) : setLike(false);
+      if (user !== null && likesArr.includes(userCur?.uid)) {
+        setLike(true);
+      }
 
       const userRef = doc(db, 'users', user);
       const docUser = await getDoc(userRef);
