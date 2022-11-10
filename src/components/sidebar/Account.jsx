@@ -1,6 +1,6 @@
-import React from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { userState, signState } from '../../reacoilStore';
+import { useEffect } from 'react';
+import { useSetRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { userState, signState, openState } from '../../reacoilStore';
 
 import {
   updateProfile,
@@ -14,12 +14,13 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 export default function Account() {
   const setSign = useSetRecoilState(signState);
   const setUser = useSetRecoilState(userState);
+  const setOpen = useResetRecoilState(openState);
   const user = useRecoilValue(userState);
   const auth = getAuth();
 
@@ -28,6 +29,7 @@ export default function Account() {
       .then(() => {
         setSign('login');
         setUser(null);
+        setOpen();
       })
       .catch((error) => {
         console.log(error.message);
@@ -50,27 +52,24 @@ export default function Account() {
         console.log(error.message);
       },
       () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
-          console.log('File available at', URL);
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((URL) => {
+            console.log('File available at', URL);
 
-          const userRef = doc(db, 'users', user.uid);
-          updateDoc(userRef, {
-            userPic: URL,
-          });
+            const userRef = doc(db, 'users', user.uid);
+            updateDoc(userRef, {
+              photoURL: URL,
+            });
 
-          onAuthStateChanged(auth, (user) => {
-            if (user) {
-              updateProfile(user, {
-                photoURL: URL,
-              });
-              setUser(user);
-            } else {
-              console.log('Hey User is signout');
-            }
+            updateProfile(auth.currentUser, {
+              photoURL: URL,
+            });
+          })
+          .then(() => {
+            onSnapshot(doc(db, 'users', user.uid), (doc) => {
+              setUser(doc.data());
+            });
           });
-        });
       }
     );
   };
@@ -86,7 +85,7 @@ export default function Account() {
           />
         </div>
       </label>
-      <span className='sign_title'>@{user?.displayName}</span>
+      <span className='sign_title'>@{user.displayName}</span>
       <button onClick={() => handleSignOut()}>Sign Out</button>
     </div>
   );
