@@ -8,11 +8,12 @@ import {
 } from 'firebase/storage';
 import { auth, db, storage } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { useRecoilValue } from 'recoil';
-import { userState } from '../../reacoilStore';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { openState, userState } from '../../reacoilStore';
 
 export default function NewPost() {
   const user = useRecoilValue(userState);
+  const setOpen = useResetRecoilState(openState);
   const [progress, setProgress] = useState(0);
   const [post, setPost] = useState({
     description: '',
@@ -48,6 +49,7 @@ export default function NewPost() {
           });
           setPost({ description: '', media: null });
           setProgress(0);
+          setOpen();
         });
       }
     );

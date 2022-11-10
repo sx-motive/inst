@@ -46,9 +46,9 @@ export default function Post({ user, content, caption, postID, likes }) {
       <div className='post_header'>
         <div className='author'>
           <div className='author_pic'>
-            <img src={userData.userPic ? userData.userPic : '/user-ph.png'} />
+            <img src={userData.photoURL ? userData.photoURL : '/user-ph.png'} />
           </div>
-          {userData.username}
+          {userData.displayName}
         </div>
       </div>
 
@@ -64,7 +64,7 @@ export default function Post({ user, content, caption, postID, likes }) {
           </span>
         </div>
         <span className='post_description'>
-          <span className='post_footer_user'>{userData.username}: </span>
+          <span className='post_footer_user'>{userData.displayName}: </span>
           {caption}
         </span>
       </div>

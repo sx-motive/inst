@@ -1,58 +1,48 @@
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { signState, userState } from '../../reacoilStore';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { openState, signState, userState } from '../../reacoilStore';
 import { handleInput } from '../../utlls/handleInput';
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 
 export default function Register() {
   const setSign = useSetRecoilState(signState);
   const setUser = useSetRecoilState(userState);
+  const setOpen = useResetRecoilState(openState);
   const [signUp, setSignUp] = useState({
     username: '',
     email: '',
     password: '',
   });
 
-  const setUserWithTimeout = () => {
-    setTimeout(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setUser(user);
-        } else {
-          return;
-        }
-      });
-    }, 2000);
-  };
-
   const submitSignUp = async () => {
-    const auth = getAuth();
     const userCredit = await createUserWithEmailAndPassword(
       auth,
       signUp.email,
       signUp.password
     );
-    const user = userCredit.user;
 
+    const user = userCredit.user;
     await updateProfile(user, {
       displayName: signUp.username,
     });
 
     setDoc(doc(db, 'users', user.uid), {
-      userId: user.uid,
-      username: user.displayName,
+      uid: user.uid,
+      displayName: user.displayName,
       email: user.email,
-      userPic: null,
+      photoURL: null,
     });
 
-    setUserWithTimeout();
+    const unsub = onSnapshot(doc(db, 'users', user.uid), (doc) => {});
+
+    setUser(user);
+    setOpen();
   };
 
   return (

@@ -1,20 +1,38 @@
 import React, { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { signState, userState } from '../../reacoilStore';
+
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { openState, signState, userState } from '../../reacoilStore';
+
 import { handleInput } from '../../utlls/handleInput';
-import { auth } from '../../firebase';
+
+import { auth, db } from '../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function Login() {
   const setSign = useSetRecoilState(signState);
+  const setOpen = useResetRecoilState(openState);
+  const setUser = useSetRecoilState(userState);
 
   const [signIn, setSignIn] = useState({ email: '', password: '' });
+
+  const setUserData = async (user) => {
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      setUser(userSnap.data());
+    } else {
+      console.log('No such document!');
+    }
+  };
+
   const submitSignIn = async () => {
     signInWithEmailAndPassword(auth, signIn.email, signIn.password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
-        // ...
+        setUserData(user);
+        setOpen();
       })
       .catch((error) => {
         const errorMessage = error.message;

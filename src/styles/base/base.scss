@@ -6,6 +6,12 @@ html {
   font-size: 25px;
 }
 
+@media screen and (max-width: 1100px) {
+  html {
+    font-size: 20px;
+  }
+}
+
 body {
   font-family: $default-ff;
   font-weight: 400;
