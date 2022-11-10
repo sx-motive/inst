@@ -14,18 +14,20 @@ export default function Header() {
           <InstagramIcon />
         </div>
 
-        <div className='header_user'>
+        <div
+          className='header_user'
+          onClick={() =>
+            setOpen((prev) => (prev == false ? (prev = true) : (prev = false)))
+          }
+        >
           <span className='header_user_name'>
-            {user ? `Hi, ${user.displayName}` : ''}{' '}
+            {user ? (
+              `Hi, ${user.displayName}`
+            ) : (
+              <span className='header_user_mobile_signin'>Sign In</span>
+            )}{' '}
           </span>
-          <div
-            className='header_user_pic'
-            onClick={() =>
-              setOpen((prev) =>
-                prev == false ? (prev = true) : (prev = false)
-              )
-            }
-          >
+          <div className='header_user_pic'>
             <img
               src={user?.photoURL ? user.photoURL : '/user-ph.png'}
               alt={user?.displayName}

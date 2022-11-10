@@ -2,15 +2,23 @@ import { useEffect, useState } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
-import { LikeIcon } from './icons';
+import { LikedIcon, LikeIcon } from './icons';
 
 export default function Post({ user, content, caption, postID, likes }) {
   const [userData, setUserData] = useState({});
+  const [isLike, setLike] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
+      const postRef = doc(db, 'posts', postID);
+      const post = await getDoc(postRef);
+      const likesArr = post.data().likes;
+
+      likesArr.includes(auth.currentUser.uid) ? setLike(true) : setLike(false);
+
       const userRef = doc(db, 'users', user);
       const docUser = await getDoc(userRef);
+
       if (docUser.exists()) {
         setUserData(docUser.data());
       } else {
@@ -27,6 +35,7 @@ export default function Post({ user, content, caption, postID, likes }) {
     const likesArr = post.data().likes;
 
     if (user !== null && likesArr.includes(user.uid) !== true) {
+      setLike(true);
       let newArrOfUsers = [];
       newArrOfUsers = [...likesArr, user.uid];
       await updateDoc(postRef, {
@@ -34,10 +43,10 @@ export default function Post({ user, content, caption, postID, likes }) {
       });
     } else {
       let filteredArray = likesArr.filter((e) => e !== user.uid);
-
       await updateDoc(postRef, {
         likes: filteredArray,
       });
+      setLike(false);
     }
   };
 
@@ -59,7 +68,7 @@ export default function Post({ user, content, caption, postID, likes }) {
       <div className='post_footer'>
         <div className='post_icons'>
           <span className='icon' onClick={likePost}>
-            <LikeIcon />
+            {isLike ? <LikedIcon /> : <LikeIcon />}
             <span className='likes_num'>{likes.length} likes</span>
           </span>
         </div>

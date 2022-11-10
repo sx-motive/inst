@@ -66,6 +66,17 @@
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
+        &.liked {
+          svg {
+            path {
+              stroke: red;
+              fill-rule: evenodd;
+              fill: red;
+              background-color: red;
+              color: red;
+            }
+          }
+        }
       }
     }
     .post_description {

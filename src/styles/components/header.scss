@@ -29,6 +29,11 @@ header {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      user-select: none;
+      .header_user_mobile_signin {
+        position: relative;
+        cursor: pointer;
+      }
       .header_user_pic {
         position: relative;
         width: 2rem;
@@ -66,6 +71,9 @@ header {
   }
   @media screen and (min-width: 1100px) {
     .menu {
+      display: none;
+    }
+    .header_user_mobile_signin {
       display: none;
     }
   }
