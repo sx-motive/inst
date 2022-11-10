@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState, openState } from '../reacoilStore';
 import { InstagramIcon } from './icons';
 
-import Sidebar from './sidebar/sidebar';
+import Sidebar from './sidebar/Sidebar';
 
 export default function Header() {
   const [open, setOpen] = useRecoilState(openState);
