@@ -1,22 +1,70 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
 
-export default function Post({ username, userPic, content, caption }) {
+import { LikeIcon } from './icons';
+
+export default function Post({ user, content, caption, postID, likes }) {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const getUser = async () => {
+      const userRef = doc(db, 'users', user);
+      const docUser = await getDoc(userRef);
+      if (docUser.exists()) {
+        setUserData(docUser.data());
+      } else {
+        console.log('No such document!');
+      }
+    };
+    getUser();
+  }, []);
+
+  const likePost = async () => {
+    const user = auth.currentUser;
+    const postRef = doc(db, 'posts', postID);
+    const post = await getDoc(postRef);
+    const likesArr = post.data().likes;
+
+    if (user !== null && likesArr.includes(user.uid) !== true) {
+      let newArrOfUsers = [];
+      newArrOfUsers = [...likesArr, user.uid];
+      await updateDoc(postRef, {
+        likes: newArrOfUsers,
+      });
+    } else {
+      let filteredArray = likesArr.filter((e) => e !== user.uid);
+
+      await updateDoc(postRef, {
+        likes: filteredArray,
+      });
+    }
+  };
+
   return (
     <div className='post'>
       <div className='post_header'>
         <div className='author'>
           <div className='author_pic'>
-            <img src={userPic} />
+            <img src={userData.userPic ? userData.userPic : '/user-ph.png'} />
           </div>
-          {username}
+          {userData.username}
         </div>
       </div>
+
       <div className='post_content'>
         <img src={content} alt='awwwards' />
       </div>
+
       <div className='post_footer'>
+        <div className='post_icons'>
+          <span className='icon' onClick={likePost}>
+            <LikeIcon />
+            <span className='likes_num'>{likes.length} likes</span>
+          </span>
+        </div>
         <span className='post_description'>
-          <span className='post_footer_user'>{username}: </span>
+          <span className='post_footer_user'>{userData.username}: </span>
           {caption}
         </span>
       </div>

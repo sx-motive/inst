@@ -3,7 +3,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 25px;
 }
 
 body {
@@ -68,6 +68,37 @@ input {
   }
   &::placeholder {
     color: $color-middle;
+  }
+}
+
+.castom_input {
+  .castom_input_placeholder {
+    position: relative;
+    display: block;
+    font-size: 0.9rem;
+    color: $black;
+    border: none;
+    outline: $color-border solid 0.5px;
+    padding: 0.4rem 0.7rem 0.5rem 0.7rem;
+    border-radius: 5px;
+    font-family: $default-ff;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    font-weight: 400;
+    cursor: pointer;
+    &:focus-visible {
+      outline: black solid 0.5px;
+    }
+    &::placeholder {
+      color: $color-middle;
+    }
+    progress {
+      position: relative;
+      width: 100%;
+    }
+  }
+  input {
+    display: none;
   }
 }
 

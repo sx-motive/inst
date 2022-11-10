@@ -1,6 +1,10 @@
-section.content {
+.page {
   position: relative;
-  padding-top: 6rem;
+
+  width: 100%;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+
   .container {
     display: flex;
     gap: 4%;
@@ -9,5 +13,16 @@ section.content {
   .timeline {
     position: relative;
     width: 61%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .page {
+    position: relative;
+    .timeline {
+      position: relative;
+      width: 100%;
+      padding: 0.4rem;
+    }
   }
 }

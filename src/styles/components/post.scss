@@ -57,6 +57,17 @@
   .post_footer {
     position: relative;
     padding: 1rem;
+    .post_icons {
+      margin-bottom: 1rem;
+      user-select: none;
+      .icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+      }
+    }
     .post_description {
       .post_footer_user {
         font-weight: 700;

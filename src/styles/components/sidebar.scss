@@ -1,7 +1,8 @@
 .sidebar {
-  position: relative;
+  position: sticky;
+  padding-top: -5rem;
+  top: 5rem;
   width: 35%;
-
   height: max-content;
 
   input {
@@ -10,6 +11,23 @@
   button {
     width: 100%;
   }
+
+  .author {
+    display: block;
+    font-size: 0.6rem;
+    color: $color-middle;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    svg {
+      height: 0.7rem;
+      width: 0.7rem;
+    }
+  }
+}
+
+.menu .sidebar {
+  width: 100%;
 }
 
 .sidebar_item {
@@ -20,6 +38,7 @@
   border: 1px solid $color-border;
   padding: 0.8rem 1rem 1.5rem 1rem;
   margin-bottom: 1rem;
+
   .sign_title {
     display: block;
     text-align: center;
@@ -53,5 +72,16 @@
     object-fit: cover;
     height: 100%;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .sidebar {
+    display: none;
+  }
+  .menu .sidebar {
+    display: block;
+    width: 100%;
+    padding: 1rem;
   }
 }
