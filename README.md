@@ -8,7 +8,7 @@ A fundamentally functional social network. The project was developed as a demons
 Project live: <a href="https://inst-motive.netlify.app" target="_blank">Visit now</a>
 
 
-<span align="center"> Say hi to author! <a href="t.me/sxmotive" target="_blank">Denis Kunitsyn</a>
+<span align="center"> Say hi to author! <a href="https://t.me/sxmotive" target="_blank">Denis Kunitsyn</a>
 <img src="https://github.com/blackcater/blackcater/raw/main/images/Hi.gif" height="32"/></span>
 
 
