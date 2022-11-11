@@ -63,7 +63,7 @@ export default function Register() {
         onChange={(e) => handleInput(e, signUp, setSignUp)}
       />
       <input
-        type='text'
+        type='password'
         placeholder='password'
         name='password'
         value={signUp.password}

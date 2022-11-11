@@ -54,7 +54,7 @@ export default function Login() {
         onChange={(e) => handleInput(e, signIn, setSignIn)}
       />
       <input
-        type='text'
+        type='password'
         placeholder='password'
         name='password'
         value={signIn.password}
